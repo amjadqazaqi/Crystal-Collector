@@ -79,7 +79,7 @@ body, html {
          
                 <div class="col-sm-4">
                         <p id="head1">WINS</p>
-                   <h1 style="color:white; font-size: 50px;font-family: 'Bungee Inline', cursive;">0</h1>
+                   <h1 id="wins" style="color:white; font-size: 50px;font-family: 'Bungee Inline', cursive;">0</h1>
                 </div>
                 <div class="col-sm-4">
                         <p id="head1">Your Total Score</p>
@@ -87,17 +87,18 @@ body, html {
                      </div>
                      <div class="col-sm-4">
                             <p id="head1">LOSSES</p>
-                            <h1 style="color:white; font-size: 50px;font-family: 'Bungee Inline', cursive;">0</h1>
+                            <h1 id="losses" style="color:white; font-size: 50px;font-family: 'Bungee Inline', cursive;">0</h1>
                          </div>
 
         </div>
         <div class="row">
          
                 <div class="col-sm-12">
-                    <img src="ruby.png" style="width:100px; height:100px;">
-                 <img src="ruby4.png" style="width:100px; height:100px;">
-                 <img src="ruby2.png" style="width:100px; height:100px;">
-                 <img src="ruby3.png" style="width:100px; height:100px;">
+                    <button type="button" class="btn btn-default ruby" value="1" id="ruby1"><img src="ruby.png" style="width:100px; height:100px;"></button> 
+                    <button type="button" class="btn btn-default ruby" value="2" id="ruby2"><img src="ruby2.png" style="width:100px; height:100px;"></button> 
+                    <button type="button" class="btn btn-default ruby" value="3" id="ruby3"><img src="ruby3.png" style="width:100px; height:100px;"></button> 
+                    <button type="button" class="btn btn-default ruby" value="4" id="ruby4"><img src="ruby4.png" style="width:100px; height:100px;"></button> 
+         
                 </div>
                 <div class="row">
                         <div class="col-sm-4">
@@ -107,8 +108,8 @@ body, html {
                                 <div class="panel-heading_custome">
                                   <h3 class="panel-title" style="background-color:white;font-size: 25px;">TARGET</h3>
                                 </div>
-                                <div class="panel-body" style="color:white; font-size: 50px;font-family: 'Bungee Inline', cursive;">
-                                  0
+                                <div class="panel-body" style="color:white; font-size: 50px;font-family: 'Bungee Inline', cursive;" id="tarval">
+                                  5555
                                 </div>
                               </div>
                     </div>            
@@ -123,12 +124,69 @@ body, html {
     </div>
 
     <script type="text/javascript">
-       randomnumber() ;
+
+       colorit() ;
+      
+       var crandoms=[3,6,9,12];
+       var mycounter=0;
+       myarray2 = [];
        var lposition=1;
        var cposition=0;
        var mycolors = ["#D90305", "#1914FA", "#0BCD01","#E805EB"];
+       var r1val=0;
+       var r2val=0;
+       var r3val=0;
+       var r4val=0;
+       wins=0;
+       losses=0;
+       var targetval=0;
+       coregame();
+function coregame()
+{
+    r1val=rancrystal ();
+    r2val=rancrystal ();
+    r3val=rancrystal ();
+    r4val=rancrystal ();
+    targetval = rantarget();
+    console.log(targetval)
+    $("#tarval").text(targetval);
+    $("#myscore").text(mycounter);
 
-        function randomnumber()
+   
+
+}
+
+$("#ruby1").on("click", function() 
+{
+mycounter=mycounter+r1val;
+$("#myscore").text(mycounter);
+checkmysum();
+
+});
+$("#ruby2").on("click", function() 
+{
+    mycounter=mycounter+r2val;
+$("#myscore").text(mycounter);
+checkmysum();
+
+});
+$("#ruby3").on("click", function() 
+{
+    mycounter=mycounter+r3val;
+$("#myscore").text(mycounter);
+checkmysum();
+
+
+});
+$("#ruby4").on("click", function() 
+{
+    mycounter=mycounter+r4val;
+$("#myscore").text(mycounter);
+checkmysum();
+
+});
+
+        function colorit()
         {
             intervalId = setInterval(colorchanger, 100);
           
@@ -151,6 +209,49 @@ body, html {
           
 
         }
+
+        function rancrystal ()
+        {
+            var x = Math.floor((Math.random()*4) );
+           
+            return crandoms[x]
+        }
+
+        function rantarget ()
+        {
+          
+            
+            for(var i=18 ; i<=120 ; i=i+3)
+            {
+                myarray2.push(i);
+
+            }
+            var x = Math.floor((Math.random() * 35) );
+            return myarray2[x]; 
+        }
+        function checkmysum()
+        {
+            if (mycounter==targetval)
+            {
+                wins++;
+                $("#wins").text(wins);
+                reset();
+            }
+            if (mycounter>targetval)
+            {
+                losses++;
+                $("#losses").text(losses);
+                reset();
+
+            }
+        }
+        function reset ()
+        {
+            mycounter=0;
+            coregame();
+
+        }
+
 
 
 
